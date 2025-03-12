@@ -15,9 +15,19 @@ library("ggplot2")
 library("tidyverse")
 install.packages("PASWR")
 library("PASWR")
-install.packages("RMark")
-library("RMark")
+install.packages("devtools")
+install.packages("remotes")
+remotes::install_github("tmcd82070/MRA")
+
+
 ```
+
+
+```{r}
+library("MRA")
+
+```
+
 
 The purpose of this exercise is to reinforce the course field trip and readings estimating animal population size using the closed-population mark-recapture method. Please read the instructions
 carefully. You can knit this to a pdf and submit it to canvas, or insert your answers into the word document and then upload to canvas. Please note: this is meant to be useful and interesting, not to simply make work for you. Please let me know if you have any questions or if the instructions are not clear and I will try to clarify asap.
