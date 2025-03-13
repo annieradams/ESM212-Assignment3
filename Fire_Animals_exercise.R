@@ -39,7 +39,7 @@ PM.burned <- read.csv("PM_burned.csv")
 PM.burned
 PM.burned$X <- NULL
 
-PM.burned <- data.matrix(PM.burned, )
+PM.burned <- data.matrix(PM.burned)
 PM.burned
 
 PMPop.burned <- F.huggins.estim(capture = ~1, recapture = NULL, PM.burned)

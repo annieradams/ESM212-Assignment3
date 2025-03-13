@@ -65,7 +65,7 @@ PM.burned
 
 
 
-## 1a) What is the estimated population size of Peromyscus mice inside and outside the burn area (this is done in the code cell below for you)? (Use the Huggins closed population function in the R package ‘mra’).
+## 1a) What is the estimated population size of Peromyscus mice inside and outside the burn area (this is done in the code cell below for you)? (Use a simple closed population function in the R package `Rcapture`).
 ```{r}
 
 # Fit closed population models using Rcapture
@@ -80,8 +80,7 @@ SE_M0 <- PMPop.unburned$results["M0", "stderr"]
 # Display the results for both models
 cat("\nConstant capture probability model (M0):\n")
 cat("Population estimate:", N_hat_M0, "\n")
-cat("Standard error:", SE_M0, "\n")
-cat("95% CI:", N_hat_M0 - 1.96*SE_M0, "-", N_hat_M0 + 1.96*SE_M0, "\n")
+
 
 
 ```
