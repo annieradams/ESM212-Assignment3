@@ -15,18 +15,12 @@ library("ggplot2")
 library("tidyverse")
 install.packages("PASWR")
 library("PASWR")
-install.packages("devtools")
-install.packages("remotes")
-remotes::install_github("tmcd82070/MRA")
 
-
-```
-
-
-```{r}
-library("MRA")
+install.packages("Rcapture")
+library(Rcapture)
 
 ```
+
 
 
 The purpose of this exercise is to reinforce the course field trip and readings estimating animal population size using the closed-population mark-recapture method. Please read the instructions
@@ -48,7 +42,6 @@ The data can be found in csv files in the exercise folder (FYI, no N. fuscipes w
 PM.unburned <- read.csv("data/PM_unburned.csv", header=T)
 PM.unburned
 PM.unburned$X <- NULL
-PM.unburned$ch <- apply(PM.unburned[, c("Encounter1", "Encounter2", "Encounter3")], 1, paste0, collapse = "")
 
 
 PM.unburned <- data.frame(PM.unburned)
@@ -69,17 +62,28 @@ PM.burned
 ```
 
 
+
+
+
 ## 1a) What is the estimated population size of Peromyscus mice inside and outside the burn area (this is done in the code cell below for you)? (Use the Huggins closed population function in the R package ‘mra’).
 ```{r}
-# PMPop.unburned <- F.huggins.estim(capture = ~1, recapture = NULL, PM.unburned)
-# PMPop.unburned # 12.8397, se=1.142
-#   #calculate the SD from the se (se * sqrt(n)) for later use in t-tests comparing means
-#   1.142*sqrt(12) # = 3.956004 #SD
+
+# Fit closed population models using Rcapture
+PMPop.unburned <- closedp(PM.unburned)
 
 
+# Extract the estimate from the M0 model
+N_hat_M0 <- PMPop.unburned$results["M0", "abundance"]
+SE_M0 <- PMPop.unburned$results["M0", "stderr"]
 
-model <- mark(data = PM.unburned, model = "Huggins")
-summary(model)
+
+# Display the results for both models
+cat("\nConstant capture probability model (M0):\n")
+cat("Population estimate:", N_hat_M0, "\n")
+cat("Standard error:", SE_M0, "\n")
+cat("95% CI:", N_hat_M0 - 1.96*SE_M0, "-", N_hat_M0 + 1.96*SE_M0, "\n")
+
+
 ```
 ## 1b) Repeat 1a for Neotoma fuscipes (woodrats) and Sceloporus occidentalis (fence lizards).
 ```{r}
