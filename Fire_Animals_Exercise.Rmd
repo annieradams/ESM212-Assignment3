@@ -1,7 +1,8 @@
 ---
 title: "Estimating small mammal and reptile population size using Mark-Recapture"
+subtitle: "ESM 212 Assignment 3"
 author: "Your name here"
-date: "2025-03-12"
+date: "2025-03-27"
 output: pdf_document
 ---
 
@@ -15,7 +16,6 @@ library("ggplot2")
 library("tidyverse")
 install.packages("PASWR")
 library("PASWR")
-
 install.packages("Rcapture")
 library(Rcapture)
 
@@ -23,14 +23,12 @@ library(Rcapture)
 
 
 
-The purpose of this exercise is to reinforce the course field trip and readings estimating animal population size using the closed-population mark-recapture method. Please read the instructions
-carefully. You can knit this to a pdf and submit it to canvas, or insert your answers into the word document and then upload to canvas. Please note: this is meant to be useful and interesting, not to simply make work for you. Please let me know if you have any questions or if the instructions are not clear and I will try to clarify asap.
+The purpose of this exercise is to reinforce the course field trip and readings estimating animal population size using the closed-population mark-recapture method. Please read the instructions carefully. You can knit this to a pdf and submit it to canvas, or insert your answers into the word document and then upload to canvas. Please note: this is meant to be useful and interesting, not to simply make work for you. Please let me know if you have any questions or if the instructions are not clear and I will try to clarify asap.
 
 #### Methods
 
 Methods
-Over the course of this week, we simulated a mark-recapture study of small mammals at Coal Oil Point, sampling for two consecutive nights on a regular trapping grid. Individuals would have been marked
-with ear tags to be able to identify recaptures. For the sake of this exercise, we will use a subset of the data from MacDonald et al. 2018 Ecosphere, as the class case study data are not sufficient to make population estimates. We will assume that the populations were closed: no births, deaths, immigration, or emigration, which is reasonable given the short timeframe of the sampling and the localized area in which sampling took place. In this case, three consecutive trapping nights were used to distinguish population sizes between burned and unburned plots in Los Padres National Forest following the 2013 White Fire. In this analysis we will use a Huggins closed population model, making the simplest assumptions about capture and recapture probabilities (e.g. they are equal and do not differ based on age, sex, prior capture history, etc.)
+Over the course of this week, we simulated a mark-recapture study of small mammals at Coal Oil Point, sampling for two consecutive nights on a regular trapping grid. Individuals would have been marked with ear tags to be able to identify recaptures. For the sake of this exercise, we will use a subset of the data from MacDonald et al. 2018 Ecosphere, as the class case study data are not sufficient to make population estimates. We will assume that the populations were closed: no births, deaths, immigration, or emigration, which is reasonable given the short timeframe of the sampling and the localized area in which sampling took place. In this case, three consecutive trapping nights were used to distinguish population sizes between burned and unburned plots in Los Padres National Forest following the 2013 White Fire. In this analysis we will use a Huggins closed population model, making the simplest assumptions about capture and recapture probabilities (e.g. they are equal and do not differ based on age, sex, prior capture history, etc.)
 
 #### Data 
 
@@ -40,21 +38,13 @@ The data can be found in csv files in the exercise folder (FYI, no N. fuscipes w
 
 # Unburned peromyscus data
 PM.unburned <- read.csv("data/PM_unburned.csv", header=T)
-PM.unburned
 PM.unburned$X <- NULL
-
-
 PM.unburned <- data.frame(PM.unburned)
 PM.unburned
 
-
-
-
 # Burned peromyscus data
 PM.burned <- read.csv("data/PM_burned.csv")
-PM.burned
 PM.burned$X <- NULL
-
 PM.burned <- data.frame(PM.burned)
 PM.burned
 
@@ -62,10 +52,7 @@ PM.burned
 ```
 
 
-
-
-
-## 1a) What is the estimated population size of Peromyscus mice inside and outside the burn area (this is done in the code cell below for you)? (Use a simple closed population function in the R package `Rcapture`).
+## 1a) What is the estimated population size of Peromyscus mice inside and outside the burn area (this is done in the code cell below for you)? (Use a simple closed population function from the R package `Rcapture`).
 ```{r}
 
 # Fit closed population models using Rcapture
@@ -74,16 +61,15 @@ PMPop.unburned <- closedp(PM.unburned)
 
 # Extract the estimate from the M0 model
 N_hat_M0 <- PMPop.unburned$results["M0", "abundance"]
-SE_M0 <- PMPop.unburned$results["M0", "stderr"]
 
 
 # Display the results for both models
-cat("\nConstant capture probability model (M0):\n")
-cat("Population estimate:", N_hat_M0, "\n")
+cat("Population estimate:", N_hat_M0)
 
 
 
 ```
+
 ## 1b) Repeat 1a for Neotoma fuscipes (woodrats) and Sceloporus occidentalis (fence lizards).
 ```{r}
 
